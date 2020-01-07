@@ -15,9 +15,6 @@ import frc.robot.commands.LiftCommand;
 import frc.robot.*;
 
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
 /**
  * Add your docs here.
  */
@@ -26,18 +23,18 @@ public class Lift extends Subsystem implements MotherSystem {
   private final Encoder lifterEncoder = new Encoder(RobotMap.LIFTER_ENCODER_SOURCE_A, RobotMap.LIFTER_ENCODER_SOURCE_B);
   private static final double DISTANCE_PER_PULSE_INCHES = (Math.PI * 1.25) / 1024 * 1;
 
-  TalonSRX liftMotor = new TalonSRX(0);
+  //TalonSRX liftMotor = new TalonSRX(0);
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
   public Lift () {
-    liftMotor.configFactoryDefault();
-    liftMotor.setInverted(false);
+    //liftMotor.configFactoryDefault();
+    //liftMotor.setInverted(false);
     lifterEncoder.setDistancePerPulse(DISTANCE_PER_PULSE_INCHES);
   }
 
   public void setSpeed(double percentSpeed) {
-    liftMotor.set(ControlMode.PercentOutput, percentSpeed);
+    //liftMotor.set(ControlMode.PercentOutput, percentSpeed);
   }
 
   public void setSpeedWithDirection(double percentSpeed, double distance){

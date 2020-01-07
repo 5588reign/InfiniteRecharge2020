@@ -7,18 +7,15 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-
+import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANEncoder;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
-//import frc.robot.commands.JoystickDrive;
 import frc.robot.commands.XBoxDrive;
 import frc.robot.*;
 
@@ -27,24 +24,25 @@ import frc.robot.*;
  */
 public class Drive extends Subsystem implements MotherSystem {
   //distance per pulse = pi * the wheel diameter in inches / pulse per revolution * fudge factor
-  private static final double DISTANCE_PER_PULSE_INCHES = (Math.PI * 6) / 256 * 1;
+  private static final double DISTANCE_PER_PULSE_INCHES = (Math.PI * 6) / 28 * 1;
 
-  private VictorSPX frontLeftMotor = new VictorSPX(12);
-  private VictorSPX backLeftMotor = new VictorSPX(13);
-  private VictorSPX frontRightMotor = new VictorSPX(14);
-  private VictorSPX backRightMotor = new VictorSPX(15);
+  private CANSparkMax frontLeftMotor = new CANSparkMax(1, MotorType.kBrushless);
+  private CANSparkMax backLeftMotor = new CANSparkMax(3, MotorType.kBrushless);
+  private CANSparkMax frontRightMotor = new CANSparkMax(2, MotorType.kBrushless);
+  private CANSparkMax backRightMotor = new CANSparkMax(4, MotorType.kBrushless);
 
-  private final Encoder leftEncoder = new Encoder(RobotMap.LEFT_ENCODER_SOURCE_A, RobotMap.LEFT_ENCODER_SOURCE_B);
-  private final Encoder rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER_SOURCE_A, RobotMap.RIGHT_ENCODER_SOURCE_B);
+  private CANEncoder frontLeftEncoder = new CANEncoder(frontLeftMotor);
+  private CANEncoder backLeftEncoder = new CANEncoder(backLeftMotor);
+  private CANEncoder frontRightEncoder = new CANEncoder(frontRightMotor);
+  private CANEncoder backRightEncoder = new CANEncoder(backRightMotor);
 
 
   public Drive() {
     super();
-
-    frontLeftMotor.configFactoryDefault();
-    frontRightMotor.configFactoryDefault();
-    backLeftMotor.configFactoryDefault();
-    backRightMotor.configFactoryDefault();
+    frontLeftMotor.restoreFactoryDefaults();
+    frontRightMotor.restoreFactoryDefaults();
+    backLeftMotor.restoreFactoryDefaults();
+    backRightMotor.restoreFactoryDefaults();
 
     frontLeftMotor.setInverted(false);
     backLeftMotor.setInverted(false);
@@ -54,40 +52,38 @@ public class Drive extends Subsystem implements MotherSystem {
     backLeftMotor.follow(frontLeftMotor);
     backRightMotor.follow(frontRightMotor);
 
-    rightEncoder.setDistancePerPulse(DISTANCE_PER_PULSE_INCHES);
-    leftEncoder.setDistancePerPulse(DISTANCE_PER_PULSE_INCHES);
-    leftEncoder.setReverseDirection(true);
-    rightEncoder.setReverseDirection(false);
+    frontLeftEncoder.setPositionConversionFactor(DISTANCE_PER_PULSE_INCHES);
+    backLeftEncoder.setPositionConversionFactor(DISTANCE_PER_PULSE_INCHES);
+    frontRightEncoder.setPositionConversionFactor(DISTANCE_PER_PULSE_INCHES);
+    backRightEncoder.setPositionConversionFactor(DISTANCE_PER_PULSE_INCHES);
+
+    frontLeftEncoder.setInverted(true);
+    backLeftEncoder.setInverted(true);
+    frontRightEncoder.setInverted(false);
+    backRightEncoder.setInverted(false);
   } 
 
   public void resetEncoders() {
-    leftEncoder.reset();
-    rightEncoder.reset();
+    frontLeftEncoder.setPosition(0.0);
+    backLeftEncoder.setPosition(0.0);
+    frontRightEncoder.setPosition(0.0);
+    backRightEncoder.setPosition(0.0);
   }
 
   public double getRightEncoderDistance() {
-    System.out.println("encoder right :" + rightEncoder.getDistance());
-    return rightEncoder.getDistance();
+    System.out.println("Right Encoder Avg:" + (frontRightEncoder.getPosition() + backRightEncoder.getPosition())/2);
+    return (frontRightEncoder.getPosition() + backRightEncoder.getPosition())/2;
   }
 
   public double getLeftEncoderDistance() {
-    System.out.println("encoder left :" + leftEncoder.getDistance());
-    return leftEncoder.getDistance();
+    System.out.println("Left Encoder Avg:" + (frontLeftEncoder.getPosition() + backLeftEncoder.getPosition())/2);
+    return (frontLeftEncoder.getPosition() + backLeftEncoder.getPosition())/2;
   }
   
   public void setSpeed(double leftSpeed, double rightSpeed) {
-    frontLeftMotor.set(ControlMode.PercentOutput, leftSpeed);
-    frontRightMotor.set(ControlMode.PercentOutput, rightSpeed);
+    frontLeftMotor.set(leftSpeed);
+    frontRightMotor.set(rightSpeed);
   }
-
-  // public void driveXBoxController(XboxController joystick) { 
-  //   double leftSpeed = interpretSpeed(-joystick.getRawAxis(5)) + interpretSpeed(joystick.getRawAxis(4));
-  //   double rightSpeed = interpretSpeed(-joystick.getRawAxis(5)) - interpretSpeed(joystick.getRawAxis(4));
-  //   setSpeed(leftSpeed, rightSpeed);
-  //   //to code for direction/throttle on different thumbsticks: change axis number 
-  // }
- 
-  //experimental throttle/direction thumbsticks
    
   public void throttleXBoxController(XboxController joystick) {
     double speed = interpretSpeed(-joystick.getRawAxis(5));
@@ -125,11 +121,11 @@ public class Drive extends Subsystem implements MotherSystem {
   }
 
   public void stop(){
-    frontLeftMotor.set(ControlMode.PercentOutput, 0);
-    frontRightMotor.set(ControlMode.PercentOutput, 0);
+    frontLeftMotor.set(0);
+    frontRightMotor.set(0);
   }
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
+
+  // Put methods for controlling this subsyste here. Call these from Commands.
 
   @Override
   public void initDefaultCommand() {
