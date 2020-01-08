@@ -15,13 +15,10 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.subsystems.ClimbingPneumatics;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Gyroscope;
-import frc.robot.subsystems.HABDrive;
-import frc.robot.subsystems.HatchPneumatics;
-import frc.robot.subsystems.I2Csubsystem;
-import frc.robot.subsystems.Lift;
+
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -32,11 +29,6 @@ import frc.robot.subsystems.Lift;
  */
 public class Robot extends TimedRobot {
   public static Drive drive = new Drive();
-  public static HatchPneumatics hatchPneumatics = new HatchPneumatics();  
-  public static I2Csubsystem i2Csub = new I2Csubsystem();
-  public static ClimbingPneumatics climbingPneumatics = new ClimbingPneumatics();
-  public static Lift lift = new Lift();
-  public static HABDrive habDrive = new HABDrive();
   public static Gyroscope gyroscope = new Gyroscope();
   public static OI m_oi;
   public static UsbCamera camera1;

@@ -6,15 +6,11 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
-import frc.robot.commands.RightCargoAuto;
+
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.GyroscopeTurn;
-import frc.robot.commands.HatchGrabber;
-import frc.robot.commands.LowerRobot;
-import frc.robot.commands.RaiseRobot;
-import frc.robot.commands.ReverseHoldLift;
 import frc.robot.commands.SwitchCamera;
 
 
@@ -79,17 +75,6 @@ public class OI {
 
 
   public OI() {
-    hatchGrabberButton.whenPressed(new HatchGrabber(true));
-    hatchPusherButton.whenPressed(new HatchGrabber(false));
-    //lightAlignmentButton.whileHeld(new LightSensor());
-    //firstLevelLift.whenPressed(new EncoderLift(0.3,0));
-    //secondLevelLift.whenPressed(new EncoderLift(0.3,40));
-    //thirdLevelLift.whenPressed(new EncoderLift(0.3,60));
-    retractFrontPneumatic.whenPressed(new LowerRobot(true, false));
-    retractBackPneumatic.whenPressed(new LowerRobot(false, false));
-    extendBothPneumatics.whenPressed(new RaiseRobot());
-    retractBothPneumatics.whenPressed(new LowerRobot(true, true));
-
     turnRightButton.whenPressed(new GyroscopeTurn(3));
     turnLeftButton.whenPressed(new GyroscopeTurn(-3));
 
@@ -101,8 +86,6 @@ public class OI {
 
     //driveOffHab.whenPressed(new RightCargoAuto());
     //driveOntoHab.whenPressed(new DriveHABMotor());
-
-    autoReverse.whenPressed(new ReverseHoldLift());
 
     //lockLift.whenPressed(new LockLift(RobotMap.LOCK_LIFT_SPEED)); //THIS IS A HOLDER VALUE, FIGURE OUT WHAT SPEED THE LIFT DRIFTS DOWN AT!!! please
     
