@@ -11,11 +11,11 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.Encoder;
+//import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.SpeedController;
+//import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.RobotMap;
+//import frc.robot.RobotMap;
 import frc.robot.commands.XBoxDrive;
 import frc.robot.*;
 
@@ -85,6 +85,7 @@ public class Drive extends Subsystem implements MotherSystem {
     frontRightMotor.set(rightSpeed);
   }
    
+  /*
   public void throttleXBoxController(XboxController joystick) {
     double speed = interpretSpeed(-joystick.getRawAxis(5));
     setSpeed(speed, speed);
@@ -93,6 +94,12 @@ public class Drive extends Subsystem implements MotherSystem {
   public void directionXboxController(XboxController joystick) {
     double speed = interpretSpeed(joystick.getRawAxis(4));
     setSpeed(-speed,speed);
+  }*/
+
+  public void tankDrive(XboxController joystick){
+    double speedLeft = interpretSpeed(-joystick.getRawAxis(1));
+    double speedRight = interpretSpeed(joystick.getRawAxis(5));
+    setSpeed(speedRight, speedLeft);
   }
 
   public double deadZone(double speed) {

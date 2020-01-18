@@ -28,8 +28,9 @@ public class XBoxDrive extends Command {
   @Override
   protected void execute() {
     //Robot.drive.driveXBoxController(Robot.m_oi.getDriverXBox());
-    Robot.drive.throttleXBoxController(Robot.m_oi.getDriverXBox());
-    Robot.drive.directionXboxController(Robot.m_oi.getDriverXBox());
+    /*Robot.drive.throttleXBoxController(Robot.m_oi.getDriverXBox());
+    Robot.drive.directionXboxController(Robot.m_oi.getDriverXBox());*/
+    Robot.drive.tankDrive(Robot.m_oi.getDriverXBox());
   }
 
   // Make this return true when this Command no longer needs to run execute()
