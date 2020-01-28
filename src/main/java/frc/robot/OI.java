@@ -10,8 +10,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.EncoderDrive;
 import frc.robot.commands.GyroscopeTurn;
-import frc.robot.commands.SwitchCamera;
+//import frc.robot.commands.SwitchCamera;
 
 
 
@@ -53,7 +54,7 @@ public class OI {
   //Button turnRight90Button = new JoystickButton(driverXBox, BUTTON_5_JOYSTICK);
   //Button turnLeft90Button = new JoystickButton(driverXBox, BUTTON_6_JOYSTICK);
 
-  //Button firstLevelLift = new JoystickButton(manipulatorJoystick, A_BUTTON_XBOX);
+  Button justDanceButton = new JoystickButton(driverXBox, A_BUTTON_XBOX);
   //Button secondLevelLift = new JoystickButton(manipulatorJoystick, X_BUTTON_XBOX);
   //Button thirdLevelLift = new JoystickButton(manipulatorJoystick, Y_BUTTON_XBOX);
 
@@ -65,7 +66,7 @@ public class OI {
   //Button driveOffHab = new JoystickButton(manipulatorJoystick, LEFT_BUMPER_XBOX);
   //Button driveOntoHab = new JoystickButton(manipulatorJoystick, X_BUTTON_XBOX);
 
-  Button switchCamera = new JoystickButton(driverXBox, JOYSTICK_RIGHT_CLICK);
+  //Button switchCamera = new JoystickButton(driverXBox, JOYSTICK_RIGHT_CLICK);
   
   Button autoReverse = new JoystickButton(controllerXBox, Y_BUTTON_XBOX);
 
@@ -78,11 +79,13 @@ public class OI {
     turnRightButton.whenPressed(new GyroscopeTurn(3));
     turnLeftButton.whenPressed(new GyroscopeTurn(-3));
 
+    justDanceButton.whenPressed(new EncoderDrive(200,0.5));
+
     //turnRight90Button.whenPressed(new GyroscopeTurn(-90));
     //turnLeft90Button.whenPressed(new GyroscopeTurn(90));
   
 
-    switchCamera.whenPressed(new SwitchCamera());
+    //switchCamera.whenPressed(new SwitchCamera());
 
     //driveOffHab.whenPressed(new RightCargoAuto());
     //driveOntoHab.whenPressed(new DriveHABMotor());

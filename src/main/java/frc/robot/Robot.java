@@ -107,6 +107,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    SmartDashboard.putNumber("Right Encoder Avg", (drive.frontRightEncoder.getPosition() + drive.backRightEncoder.getPosition())/2);
+    SmartDashboard.putNumber("Left Encoder Avg", (drive.frontLeftEncoder.getPosition() + drive.backLeftEncoder.getPosition())/2);
   }
 
   /**
@@ -116,6 +118,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
+    drive.resetEncoders();
   }
 
   @Override
@@ -175,6 +178,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+
     /*double centertapeOneX;
     double centertapeTwoX;
     synchronized (imgLock) {
