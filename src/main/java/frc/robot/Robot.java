@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Gyroscope;
+import frc.robot.subsystems.Limelight;
 
 
 
@@ -30,6 +31,7 @@ import frc.robot.subsystems.Gyroscope;
 public class Robot extends TimedRobot {
   public static Drive drive = new Drive();
   public static Gyroscope gyroscope = new Gyroscope();
+  public static Limelight limelight = new Limelight();
   public static OI m_oi;
   public static UsbCamera camera1;
   public static UsbCamera camera2;
@@ -109,6 +111,10 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     SmartDashboard.putNumber("Right Encoder Avg", (drive.frontRightEncoder.getPosition() + drive.backRightEncoder.getPosition())/2);
     SmartDashboard.putNumber("Left Encoder Avg", (drive.frontLeftEncoder.getPosition() + drive.backLeftEncoder.getPosition())/2);
+
+    SmartDashboard.putNumber("LimelightX", limelight.getLimelightX());
+    SmartDashboard.putNumber("LimelightY", limelight.getLimelightY());
+    SmartDashboard.putNumber("LimelightArea", limelight.getLimelightArea());
   }
 
   /**
