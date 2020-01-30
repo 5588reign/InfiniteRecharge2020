@@ -70,6 +70,15 @@ public class Drive extends Subsystem implements MotherSystem {
     frontLeftMotor.set(leftSpeed);
     frontRightMotor.set(rightSpeed);
   }
+  public double getRightEncoderDistance() {
+    System.out.println("Right Encoder Avg:" + (frontRightEncoder.getPosition() + backRightEncoder.getPosition())/2);
+    return (frontRightEncoder.getPosition() + backRightEncoder.getPosition())/2;
+  }
+
+  public double getLeftEncoderDistance() {
+    System.out.println("Left Encoder Avg:" + (frontLeftEncoder.getPosition() + backLeftEncoder.getPosition())/2);
+    return (frontLeftEncoder.getPosition() + backLeftEncoder.getPosition())/2;
+  }
 
   public void tankDrive(XboxController joystick){
     double speedLeft = interpretSpeed(-joystick.getRawAxis(1));
