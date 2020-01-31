@@ -7,26 +7,30 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANEncoder;
+import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+//import com.ctre;
+
+
 
 //import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.XboxController;
 //import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.MotherSystem;
 //import frc.robot.RobotMap;
 import frc.robot.commands.XBoxDrive;
-import frc.robot.*;
-import edu.wpi.first.wpilibj.shuffleboard.*;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * An example subsystem.  You can replace me with your own Subsystem.
+ * An example subsystem. You can replace me with your own Subsystem.
  */
 public class Drive extends Subsystem implements MotherSystem {
-  //distance per pulse = pi * the wheel diameter in inches / pulse per revolution * fudge factor
+  // distance per pulse = pi * the wheel diameter in inches / pulse per revolution
+  // * fudge factor
   private static final double DISTANCE_PER_PULSE_INCHES = (Math.PI * 6) / 10.5 * 1;
+
+  public VictorSPX ballCollector = new VictorSPX(5);
 
   private CANSparkMax frontLeftMotor = new CANSparkMax(1, MotorType.kBrushless);
   private CANSparkMax backLeftMotor = new CANSparkMax(3, MotorType.kBrushless);
@@ -83,7 +87,11 @@ public class Drive extends Subsystem implements MotherSystem {
   public void tankDrive(XboxController joystick){
     double speedLeft = interpretSpeed(-joystick.getRawAxis(1));
     double speedRight = interpretSpeed(-joystick.getRawAxis(5));
-    setSpeed(speedLeft/2, speedRight/2);
+    setSpeed(speedLeft, speedRight);
+  }
+
+  public double ballCollectSpeed(XboxController joystick){
+    return interpretSpeed(-joystick.getRawAxis(1));
   }
 
   public double deadZone(double speed) {

@@ -44,6 +44,8 @@ public class OI {
   private final XboxController driverXBox = new XboxController(1);
   private final XboxController controllerXBox = new XboxController(2);
 
+  //Button ballCollector = new JoystickButton(driverXBox, X_BUTTON_XBOX_DRIVE);
+
   Button hatchGrabberButton = new JoystickButton(controllerXBox, B_BUTTON_XBOX);
   Button hatchPusherButton = new JoystickButton(controllerXBox, A_BUTTON_XBOX);
   //Button lightAlignmentButton = new JoystickButton(manipulatorJoystick, START_ARROW);
