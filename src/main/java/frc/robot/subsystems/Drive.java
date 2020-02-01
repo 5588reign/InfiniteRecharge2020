@@ -30,7 +30,7 @@ public class Drive extends Subsystem implements MotherSystem {
   // * fudge factor
   private static final double DISTANCE_PER_PULSE_INCHES = (Math.PI * 6) / 10.5 * 1;
 
-  public VictorSPX ballCollector = new VictorSPX(5);
+ // public VictorSPX ballCollector = new VictorSPX(5);
 
   private CANSparkMax frontLeftMotor = new CANSparkMax(1, MotorType.kBrushless);
   private CANSparkMax backLeftMotor = new CANSparkMax(3, MotorType.kBrushless);

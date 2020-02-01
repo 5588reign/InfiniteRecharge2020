@@ -5,6 +5,8 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+
+
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -26,7 +28,7 @@ public class BallCollect extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.drive.ballCollector.set(Robot.drive.ballCollectSpeed(Robot.m_oi.getControllerXBox()));
+    Robot.drive.ballCollect.set(Robot.drive.ballCollectSpeed(Robot.m_oi.getControllerXBox()));
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -45,4 +47,4 @@ public class BallCollect extends Command {
   @Override
   protected void interrupted() {
   }
-}
+} 
