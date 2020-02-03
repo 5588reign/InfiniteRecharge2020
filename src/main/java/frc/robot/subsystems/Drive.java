@@ -10,7 +10,8 @@ package frc.robot.subsystems;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-//import com.ctre;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 
 
@@ -19,6 +20,7 @@ import edu.wpi.first.wpilibj.XboxController;
 //import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.MotherSystem;
+import frc.robot.Robot;
 //import frc.robot.RobotMap;
 import frc.robot.commands.XBoxDrive;
 
@@ -30,7 +32,7 @@ public class Drive extends Subsystem implements MotherSystem {
   // * fudge factor
   private static final double DISTANCE_PER_PULSE_INCHES = (Math.PI * 6) / 10.5 * 1;
 
- // public VictorSPX ballCollector = new VictorSPX(5);
+  private VictorSPX ballCollectMotor = new VictorSPX(5);
 
   private CANSparkMax frontLeftMotor = new CANSparkMax(1, MotorType.kBrushless);
   private CANSparkMax backLeftMotor = new CANSparkMax(3, MotorType.kBrushless);
@@ -47,6 +49,21 @@ public class Drive extends Subsystem implements MotherSystem {
     backLeftEncoder.setPosition(0.0);
     frontRightEncoder.setPosition(0.0);
     backRightEncoder.setPosition(0.0);
+  }
+
+  public void setBallCollect(){
+    double speed = Robot.m_oi.getControllerXBox().getRawAxis(1);
+    speed = deadZone(speed);
+    if(speed == 0){
+      speed = 0;
+    }
+    else if(speed > 0){
+      speed = 1.0;
+    }
+    else{
+      speed = -1.0;
+    }
+    ballCollectMotor.set(ControlMode.PercentOutput, speed);
   }
 
   public Drive() {
@@ -90,9 +107,6 @@ public class Drive extends Subsystem implements MotherSystem {
     setSpeed(speedLeft, speedRight);
   }
 
-  public double ballCollectSpeed(XboxController joystick){
-    return interpretSpeed(-joystick.getRawAxis(1));
-  }
 
   public double deadZone(double speed) {
     if (Math.abs(speed) < .025) {

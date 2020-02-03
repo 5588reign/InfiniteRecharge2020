@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.BallCollect;
 import frc.robot.commands.EncoderDrive;
 import frc.robot.commands.GyroscopeTurn;
 //import frc.robot.commands.SwitchCamera;
@@ -29,30 +30,22 @@ public class OI {
   private static final int RIGHT_BUMPER_XBOX = 6;
   private static final int BACK_ARROW = 7;
   private static final int START_ARROW = 8;
-
-  private static final int A_BUTTON_XBOX_DRIVE = 1;
-  private static final int B_BUTTON_XBOX_DRIVE = 2;
-  private static final int X_BUTTON_XBOX_DRIVE = 3;
-  private static final int Y_BUTTON_XBOX_DRIVE = 4;
-  private static final int LEFT_BUMPER_XBOX_DRIVE = 5;
-  private static final int RIGHT_BUMPER_XBOX_DRIVE = 6;
-  private static final int BACK_ARROW_DRIVE = 7;
-  private static final int START_ARROW_DRIVE = 8;
   private static final int JOYSTICK_RIGHT_CLICK = 10;
   private static final int JOYSTICK_LEFT_CLICK = 9;
 
   private final XboxController driverXBox = new XboxController(1);
   private final XboxController controllerXBox = new XboxController(2);
 
-  //Button ballCollector = new JoystickButton(driverXBox, X_BUTTON_XBOX_DRIVE);
+  //Button ballCollectButtonBackward = new JoystickButton(controllerXBox, A_BUTTON_XBOX);
+
 
   Button hatchGrabberButton = new JoystickButton(controllerXBox, B_BUTTON_XBOX);
   Button hatchPusherButton = new JoystickButton(controllerXBox, A_BUTTON_XBOX);
   //Button lightAlignmentButton = new JoystickButton(manipulatorJoystick, START_ARROW);
 
   //Button visionAlignmentButton = new JoystickButton(driverXBox, BUTTON_12_JOYSTICK);
-  Button turnRightButton = new JoystickButton(driverXBox,RIGHT_BUMPER_XBOX_DRIVE);
-  Button turnLeftButton = new JoystickButton(driverXBox,LEFT_BUMPER_XBOX_DRIVE);
+  Button turnRightButton = new JoystickButton(driverXBox,RIGHT_BUMPER_XBOX);
+  Button turnLeftButton = new JoystickButton(driverXBox,LEFT_BUMPER_XBOX);
   //Button turnRight90Button = new JoystickButton(driverXBox, BUTTON_5_JOYSTICK);
   //Button turnLeft90Button = new JoystickButton(driverXBox, BUTTON_6_JOYSTICK);
 
@@ -82,6 +75,7 @@ public class OI {
     turnLeftButton.whenPressed(new GyroscopeTurn(-3));
 
     justDanceButton.whenPressed(new EncoderDrive(200,0.5));
+
 
     //turnRight90Button.whenPressed(new GyroscopeTurn(-90));
     //turnLeft90Button.whenPressed(new GyroscopeTurn(90));

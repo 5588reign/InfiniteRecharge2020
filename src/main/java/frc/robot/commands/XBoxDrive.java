@@ -31,6 +31,7 @@ public class XBoxDrive extends Command {
     /*Robot.drive.throttleXBoxController(Robot.m_oi.getDriverXBox());
     Robot.drive.directionXboxController(Robot.m_oi.getDriverXBox());*/
     Robot.drive.tankDrive(Robot.m_oi.getDriverXBox());
+    Robot.drive.setBallCollect();
   }
 
   // Make this return true when this Command no longer needs to run execute()
