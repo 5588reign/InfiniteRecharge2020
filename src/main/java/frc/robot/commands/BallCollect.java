@@ -5,32 +5,32 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-
-
 package frc.robot.commands;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.Drive;
+
 
 public class BallCollect extends Command {
-  public BallCollect() {
+  private boolean isFront;
+  public BallCollect(boolean a) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.drive);
+    this.isFront = a;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+   
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    //Robot.drive.setBallCollect(1.0);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -42,7 +42,19 @@ public class BallCollect extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    //Robot.drive.setBallCollect(0.0);
+    double speed = Robot.drive.ballCollectMotor.getMotorOutputPercent();
+    if (isFront && speed == 0){
+      Robot.drive.ballCollectMotor.set(ControlMode.PercentOutput, 1.0);
+    }
+    else if (isFront && speed != 0){
+      Robot.drive.ballCollectMotor.set(ControlMode.PercentOutput, 0.0);
+    }
+    else if (!isFront && speed == 0){
+      Robot.drive.ballCollectMotor.set(ControlMode.PercentOutput, -1.0);
+    }
+    else if (!isFront && speed != 0){
+      Robot.drive.ballCollectMotor.set(ControlMode.PercentOutput, 0.0);
+    }
   }
 
   // Called when another command which requires one or more of the same
@@ -50,4 +62,4 @@ public class BallCollect extends Command {
   @Override
   protected void interrupted() {
   }
-} 
+}

@@ -38,14 +38,16 @@ public class OI {
 
   //Button ballCollectButtonBackward = new JoystickButton(controllerXBox, A_BUTTON_XBOX);
 
+  Button ballCollectBack = new JoystickButton(driverXBox, LEFT_BUMPER_XBOX);
+  Button ballCollectForward = new JoystickButton(driverXBox, RIGHT_BUMPER_XBOX);
 
   Button hatchGrabberButton = new JoystickButton(controllerXBox, B_BUTTON_XBOX);
   Button hatchPusherButton = new JoystickButton(controllerXBox, A_BUTTON_XBOX);
   //Button lightAlignmentButton = new JoystickButton(manipulatorJoystick, START_ARROW);
 
   //Button visionAlignmentButton = new JoystickButton(driverXBox, BUTTON_12_JOYSTICK);
-  Button turnRightButton = new JoystickButton(driverXBox,RIGHT_BUMPER_XBOX);
-  Button turnLeftButton = new JoystickButton(driverXBox,LEFT_BUMPER_XBOX);
+  //Button turnRightButton = new JoystickButton(driverXBox,RIGHT_BUMPER_XBOX);
+  //Button turnLeftButton = new JoystickButton(driverXBox,LEFT_BUMPER_XBOX);
   //Button turnRight90Button = new JoystickButton(driverXBox, BUTTON_5_JOYSTICK);
   //Button turnLeft90Button = new JoystickButton(driverXBox, BUTTON_6_JOYSTICK);
 
@@ -55,8 +57,8 @@ public class OI {
 
   Button extendBothPneumatics = new JoystickButton(controllerXBox, START_ARROW);
   Button retractBothPneumatics = new JoystickButton(driverXBox, BACK_ARROW);
-  Button retractFrontPneumatic = new JoystickButton(controllerXBox, LEFT_BUMPER_XBOX);
-  Button retractBackPneumatic = new JoystickButton(controllerXBox, RIGHT_BUMPER_XBOX);
+  //Button retractFrontPneumatic = new JoystickButton(controllerXBox, LEFT_BUMPER_XBOX);
+  //Button retractBackPneumatic = new JoystickButton(controllerXBox, RIGHT_BUMPER_XBOX);
   
   //Button driveOffHab = new JoystickButton(manipulatorJoystick, LEFT_BUMPER_XBOX);
   //Button driveOntoHab = new JoystickButton(manipulatorJoystick, X_BUTTON_XBOX);
@@ -71,11 +73,16 @@ public class OI {
 
 
   public OI() {
-    turnRightButton.whenPressed(new GyroscopeTurn(3));
-    turnLeftButton.whenPressed(new GyroscopeTurn(-3));
+    //turnRightButton.whenPressed(new GyroscopeTurn(3));
+    //turnLeftButton.whenPressed(new GyroscopeTurn(-3));
 
     justDanceButton.whenPressed(new EncoderDrive(200,0.5));
+    
+    ballCollectBack.whenPressed(new BallCollect(true));
+    ballCollectForward.whenPressed(new BallCollect(false));
+    //does thing
 
+    
 
     //turnRight90Button.whenPressed(new GyroscopeTurn(-90));
     //turnLeft90Button.whenPressed(new GyroscopeTurn(90));
