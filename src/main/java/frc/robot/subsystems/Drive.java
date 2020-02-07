@@ -10,11 +10,9 @@ package frc.robot.subsystems;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
-
-
+import edu.wpi.first.wpilibj.SpeedController;
 //import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.XboxController;
 //import edu.wpi.first.wpilibj.SpeedController;
@@ -32,7 +30,7 @@ public class Drive extends Subsystem implements MotherSystem {
   // * fudge factor
   private static final double DISTANCE_PER_PULSE_INCHES = (Math.PI * 6) / 10.5 * 1;
 
-  private VictorSPX ballCollectMotor = new VictorSPX(5);
+  public VictorSPX ballCollectMotor = new VictorSPX(5);
 
   private CANSparkMax frontLeftMotor = new CANSparkMax(1, MotorType.kBrushless);
   private CANSparkMax backLeftMotor = new CANSparkMax(3, MotorType.kBrushless);
@@ -91,8 +89,8 @@ public class Drive extends Subsystem implements MotherSystem {
   } 
   
   public void setSpeed(double leftSpeed, double rightSpeed) {
-    frontLeftMotor.set(leftSpeed);
-    frontRightMotor.set(rightSpeed);
+    frontLeftMotor.set(leftSpeed/2);
+    frontRightMotor.set(rightSpeed/2);
   }
   public double getRightEncoderDistance() {
     System.out.println("Right Encoder Avg:" + (frontRightEncoder.getPosition() + backRightEncoder.getPosition())/2);
