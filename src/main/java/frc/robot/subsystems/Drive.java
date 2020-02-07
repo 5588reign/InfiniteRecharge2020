@@ -64,14 +64,17 @@ public class Drive extends Subsystem implements MotherSystem {
       speed = -1.0;
     }
     ballCollectMotor.set(ControlMode.PercentOutput, speed);
+
   }
 
   public Drive() {
     super();
+    /*
     frontLeftMotor.restoreFactoryDefaults();
     frontRightMotor.restoreFactoryDefaults();
     backLeftMotor.restoreFactoryDefaults();
     backRightMotor.restoreFactoryDefaults();
+    */
 
     frontRightMotor.setInverted(true);
     backRightMotor.setInverted(true);
