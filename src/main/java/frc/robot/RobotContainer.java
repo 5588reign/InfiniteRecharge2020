@@ -10,37 +10,29 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import frc.robot.commands.BallEject;
-import frc.robot.commands.BallIntake;
-import frc.robot.commands.LimelightAutoTrack;
-import frc.robot.subsystems.BallSubsystem;
-import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.Limelight;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.BallEjectCommand;
+import frc.robot.commands.BallIntakeCommand;
+import frc.robot.commands.LimelightAutoTrackCommand;
+import frc.robot.subsystems.BallSubsystem;
+import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.LimelightSubsystem;
 
-/**
- * This class is where the bulk of the robot should be declared.  Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls).  Instead, the structure of the robot
- * (including subsystems, commands, and button mappings) should be declared here.
- */
 public class RobotContainer {
-  public static XboxController driverXbox = new XboxController(1);
-  public static Limelight m_limelight = new Limelight();
+  public static XboxController driverXBox = new XboxController(1);
+  public static XboxController manipulatorXBox = new XboxController(2);
+  // ^ FIX: Check to make sure manipulatorXBox is on the right port
+
+  public static LimelightSubsystem m_limelight = new LimelightSubsystem();
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final BallSubsystem m_ballSubsystem = new BallSubsystem();
-  //public final Limelight m_exampleSubsystem = new Limelight();
-
-
-
-// The robot's subsystems and commands are defined here...
+  // ^ This is where we make our subsystems into instances!
 
   private static final int A_BUTTON_XBOX = 1;
   private static final int B_BUTTON_XBOX = 2;
@@ -53,16 +45,6 @@ public class RobotContainer {
   private static final int JOYSTICK_RIGHT_CLICK = 10;
   private static final int JOYSTICK_LEFT_CLICK = 9;
 
-  private final XboxController driverXBox = new XboxController(1);
-  private final XboxController controllerXBox = new XboxController(2);
-
-  //private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-
-
-
-  /**
-   * The container for the robot.  Contains subsystems, OI devices, and commands.
-   */
   public RobotContainer() {
     configureButtonBindings();
 
@@ -70,34 +52,26 @@ public class RobotContainer {
       new RunCommand(() -> m_robotDrive
         .tankDrive(driverXBox.getRawAxis(1), driverXBox.getRawAxis(5)),
           m_robotDrive));
+    // ^ Setting the Default Command to m_robotDrive, meaning it will drive as long as nothing else is scheduled
   }
 
-  /**
-   * Use this method to define your button->command mappings.  Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
-   * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-   */
   private void configureButtonBindings() {
     JoystickButton limelightButton = new JoystickButton(driverXBox, X_BUTTON_XBOX);
-    limelightButton.whileHeld(new LimelightAutoTrack());
+    limelightButton.whileHeld(new LimelightAutoTrackCommand());
 
     JoystickButton ballCollectButton = new JoystickButton(driverXBox, LEFT_BUMPER_XBOX);
-    ballCollectButton.toggleWhenPressed(new BallIntake(m_ballSubsystem));
+    ballCollectButton.toggleWhenPressed(new BallIntakeCommand(m_ballSubsystem));
 
-    JoystickButton ballEjectButton = new JoystickButton(driverXBox, RIGHT_BUMPER_XBOX);
-    ballEjectButton.toggleWhenPressed(new BallEject(m_ballSubsystem));
+    JoystickButton ballEjectCommandButton = new JoystickButton(driverXBox, RIGHT_BUMPER_XBOX);
+    ballEjectCommandButton.toggleWhenPressed(new BallEjectCommand(m_ballSubsystem));
   }
 
+  /*
+   public Command getAutonomousCommand() {
+     // An ExampleCommand will run in autonomous
+     return m_autoCommand;
+  }
+  */
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
-
-  // public Command getAutonomousCommand() {
-  //   // An ExampleCommand will run in autonomous
-  //   return m_autoCommand;
-  // }
+  // ^ Example of an Autonomous Command, could come in handy later! 
 }

@@ -13,26 +13,21 @@ import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.Constants;
-import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.LimelightSubsystem;
 
-public class LimelightAutoTrack extends CommandBase {
-  /**
-   * Creates a new LimelightAutoTrack.
-   */
+public class LimelightAutoTrackCommand extends CommandBase {
+
   double leftSpeed = 0.0;
   double rightSpeed = 0.0;
 
-  public LimelightAutoTrack() {
-    // Use addRequirements() here to declare subsystem dependencies.
+  public LimelightAutoTrackCommand() {
   
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     if (!RobotContainer.m_limelight.hasTarget()){
@@ -50,12 +45,10 @@ public class LimelightAutoTrack extends CommandBase {
     SmartDashboard.putNumber("Right Speed", rightSpeed);    
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;

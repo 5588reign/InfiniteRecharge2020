@@ -10,24 +10,21 @@ package frc.robot.subsystems;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-//import sun.nio.ch.Net;
 
-public class Limelight extends SubsystemBase {
-  /**
-   * Creates a new ExampleSubsystem.
-   */
+public class LimelightSubsystem extends SubsystemBase {
 
   private final NetworkTable limelight = NetworkTableInstance.getDefault().getTable("limelight");
 
-  public Limelight(int pipeline) {
-
+  public LimelightSubsystem(int pipeline) {
     limelight.getEntry("pipeline").setNumber(pipeline);
-
   }
+  // ^ Sets which pipeline the limelight is working off of
 
-  public Limelight(){
+  public LimelightSubsystem(){
     this(0);
   }
+  // ^ If no pipeline is entered, this constructor makes it pipeline zero
+  // ^ FIX: Depending on how we set it up, we should change this
 
   public boolean hasTarget() {
     return limelight.getEntry("tv").getDouble(0.0) > 0.0; 
@@ -44,9 +41,10 @@ public class Limelight extends SubsystemBase {
   public double getArea() {
     return limelight.getEntry("ta").getDouble(0.0);
   }
+  // ^ Our epic limelight methods!
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+
   }
 }

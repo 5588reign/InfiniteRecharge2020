@@ -9,32 +9,37 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
-
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANEncoder;
 
-public class TurnLeft extends CommandBase {
+public class TurnLeftCommand extends CommandBase {
   
-  public TurnLeft(DriveSubsystem m_drive) {
+  private DriveSubsystem m_driveSubsystem;
 
+  public TurnLeftCommand(DriveSubsystem driveSubsystem) {
+    m_driveSubsystem = driveSubsystem;
   }
 
   @Override
   public void initialize() {
-    
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    /*
+    m_driveSubSystem.frontLeftEncoder.setPosition(-5);
+    m_driveSubSystem.frontRightEncoder.setPosition(5);
+    m_driveSubSystem.backLeftEncoder.setPosition(-5);
+    m_driveSubSystem.backRightEncoder.setPosition(5);
+    */
   }
+  // ^ Should turn the robot to the left but idk if its in the right place yet :/
+  // ^ FIX: If this works, make a constant to pass in
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;

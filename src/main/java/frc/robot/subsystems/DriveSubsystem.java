@@ -10,9 +10,9 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANEncoder;
 
 public class DriveSubsystem extends SubsystemBase {
 
@@ -30,6 +30,12 @@ public class DriveSubsystem extends SubsystemBase {
 
 
   public DriveSubsystem() {
+    frontLeftMotor.setInverted(false);
+    frontRightMotor.setInverted(false);
+    backLeftMotor.setInverted(false);
+    backRightMotor.setInverted(false);
+    // ^ FIX: Making sure none of the motors are inverted, change when we figure out WTH is up with the motors lol
+
     backLeftMotor.follow(frontLeftMotor);
     backRightMotor.follow(frontRightMotor);
 
@@ -37,13 +43,12 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public void tankDrive(double leftSpeed, double rightSpeed){
-    m_drive.tankDrive(-leftSpeed * Constants.k, rightSpeed * Constants.k);
-    //Plz remove minus sign when we figure out why the motor is inverted k thx
+    m_drive.tankDrive(leftSpeed * Constants.k, rightSpeed * Constants.k);
   }
-
 
   @Override
   public void periodic() {
-    
+    //m_drive.feedWatchDog();
+    // ^ FIX: Tries to keep the WatchDog from Whining
   }
 }

@@ -9,7 +9,6 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class BallSubsystem extends SubsystemBase {
@@ -25,7 +24,7 @@ public class BallSubsystem extends SubsystemBase {
 
   }
 
-  public void setBallCollecctSpeed(double speed){
+  public void setBallCollectSpeed(double speed){
     ballCollect.set(ControlMode.PercentOutput, speed);
   }
 
@@ -36,6 +35,6 @@ public class BallSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    
   }
 }
