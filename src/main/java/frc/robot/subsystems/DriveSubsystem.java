@@ -48,7 +48,6 @@ public class DriveSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    //m_drive.feedWatchDog();
-    // ^ FIX: Tries to keep the WatchDog from Whining
+    m_drive.feedWatchdog(); // keep safety happy
   }
 }
