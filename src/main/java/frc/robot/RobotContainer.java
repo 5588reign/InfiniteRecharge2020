@@ -26,9 +26,6 @@ import frc.robot.commands.SequentialDriveExampleCommand;
 import frc.robot.subsystems.BallSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
-import frc.robot.command.SequentialDriveCommand;
-import frc.robot.command.TurnInPlaceCommand;
-import frc.robot.command.DistanceDriveCommand;
 
 public class RobotContainer {
   public static XboxController driverXBox = new XboxController(1);
@@ -67,10 +64,10 @@ public class RobotContainer {
     ballEjectCommandButton.toggleWhenPressed(new BallEjectCommand(m_ballSubsystem));
 
     JoystickButton driveDistanceCommandButton = new JoystickButton(driverXBox, X_BUTTON_XBOX);
-    driveDistanceCommandButton.whenPressed(new DriveDistanceCommand(10, 0.2, m_robotDrive));
+    driveDistanceCommandButton.whenPressed(new DriveDistanceCommand(60, 1, m_robotDrive));
 
     JoystickButton turnInplaceCommandButton = new JoystickButton(driverXBox, Y_BUTTON_XBOX);
-    turnInplaceCommandButton.whenPressed(new TurnInplaceCommand(10, 0.2, m_robotDrive));
+    turnInplaceCommandButton.whenPressed(new TurnInplaceCommand(10, 1, m_robotDrive));
 
     JoystickButton sequentialDriveCommandButton = new JoystickButton(driverXBox, A_BUTTON_XBOX);
     sequentialDriveCommandButton.whenPressed(new SequentialDriveExampleCommand(m_robotDrive));
