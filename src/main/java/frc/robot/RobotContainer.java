@@ -23,6 +23,9 @@ import frc.robot.commands.LimelightAutoTrackCommand;
 import frc.robot.subsystems.BallSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
+import frc.robot.command.SequentialDriveCommand;
+import frc.robot.command.TurnInPlaceCommand;
+import frc.robot.command.DistanceDriveCommand;
 
 public class RobotContainer {
   public static XboxController driverXBox = new XboxController(1);
@@ -56,14 +59,17 @@ public class RobotContainer {
   }
 
   private void configureButtonBindings() {
-    JoystickButton limelightButton = new JoystickButton(driverXBox, X_BUTTON_XBOX);
+    JoystickButton limelightButton = new JoystickButton(driverXBox, B_BUTTON_XBOX);
     limelightButton.whileHeld(new LimelightAutoTrackCommand());
 
-    JoystickButton ballCollectButton = new JoystickButton(driverXBox, LEFT_BUMPER_XBOX);
-    ballCollectButton.toggleWhenPressed(new BallIntakeCommand(m_ballSubsystem));
+    JoystickButton driveDistanceCommandButton = new JoystickButton(driverXBox, X_BUTTON_XBOX);
+    driveDistanceCommandButton.whenPressed(new DriveDistanceCommand(10, -1, m_robotDrive));
 
-    JoystickButton ballEjectCommandButton = new JoystickButton(driverXBox, RIGHT_BUMPER_XBOX);
-    ballEjectCommandButton.toggleWhenPressed(new BallEjectCommand(m_ballSubsystem));
+    JoystickButton turnInplaceCommandButton = new JoystickButton(driverXBox, Y_BUTTON_XBOX);
+    turnInplaceCommandButton.whenPressed(new TurnInplaceCommand(10, 1, m_robotDrive));
+
+    JoystickButton sequentialDriveCommandButton = new JoystickButton(driverXBox, A_BUTTON_XBOX);
+    sequentialDriveCommandButton.whenPressed(new SequentialDriveExampleCommand(m_robotDrive));
   }
 
   /*
