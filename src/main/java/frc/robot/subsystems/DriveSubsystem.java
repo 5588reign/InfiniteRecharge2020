@@ -7,12 +7,12 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANEncoder;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.CANEncoder;
 
 public class DriveSubsystem extends SubsystemBase {
 
@@ -23,11 +23,10 @@ public class DriveSubsystem extends SubsystemBase {
   private CANSparkMax backLeftMotor = new CANSparkMax(3, MotorType.kBrushless);
   private CANSparkMax backRightMotor = new CANSparkMax(4, MotorType.kBrushless);
 
-  private CANEncoder frontLeftEncoder = new CANEncoder(frontLeftMotor);
-  private CANEncoder frontRightEncoder = new CANEncoder(frontRightMotor);
-  private CANEncoder backLeftEncoder = new CANEncoder(backLeftMotor);
-  private CANEncoder backRightEncoder = new CANEncoder(backRightMotor);
-
+  private CANEncoder m_frontLeftEncoder = new CANEncoder(frontLeftMotor);
+  private CANEncoder m_frontRightEncoder = new CANEncoder(frontRightMotor);
+  private CANEncoder m_backLeftEncoder = new CANEncoder(backLeftMotor);
+  private CANEncoder m_backRightEncoder = new CANEncoder(backRightMotor);
 
   public DriveSubsystem() {
     frontLeftMotor.setInverted(false);
@@ -39,15 +38,50 @@ public class DriveSubsystem extends SubsystemBase {
     backLeftMotor.follow(frontLeftMotor);
     backRightMotor.follow(frontRightMotor);
 
+    // ???? Configure encoders here
+
     m_drive = new DifferentialDrive(frontLeftMotor, frontRightMotor);
   }
 
+  public void arcadeDrive(double speed, double rotation) {
+    m_drive.arcadeDrive(speed * Constants.k, rotation);
+  }
+    
   public void tankDrive(double leftSpeed, double rightSpeed){
+    // May need invert left
     m_drive.tankDrive(leftSpeed * Constants.k, rightSpeed * Constants.k);
   }
 
   @Override
   public void periodic() {
-    m_drive.feedWatchdog(); // keep safety happy
+    m_drive.feedWatchdog(); // check this
   }
+
+  public void resetEncoders() {
+    m_frontLeftEncoder.setPosition(0.0);
+    m_frontRightEncoder.setPosition(0.0);
+    m_backLeftEncoder.setPosition(0.0);
+    m_backRightEncoder.setPosition(0.0);
+  }
+
+  public double getMeanEncoderDistance() {
+    // currently report leaders only
+    return (getLeftEncoderDistance() + getRighttEncoderDistance()) / 2.0;
+  }
+
+  public double getLeftEncoderDistance() {
+    // currently report leader only
+    return m_frontLeftEncoder.getPosition();
+  }
+
+  public double getRighttEncoderDistance() {
+    // currently report leader only      
+    return m_frontRightEncoder.getPosition();
+  }
+
+  // May want to try this rather than multiplying by constant scale everywhere
+  public void setMaxOutput(double maxOutput) {
+    m_drive.setMaxOutput(maxOutput);
+  }
+  
 }
