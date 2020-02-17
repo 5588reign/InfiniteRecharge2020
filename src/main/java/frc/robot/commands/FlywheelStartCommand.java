@@ -22,7 +22,7 @@ public class FlywheelStartCommand extends CommandBase {
 
   @Override
   public void initialize() {
-    m_ballSubsystem.setFlywheelSpeed(Constants.FLYWHEEL_SPEED);
+    m_ballSubsystem.setFlywheelSpeed(Constants.BALL_FLYWHEEL_SPEED);
   }
 
   @Override

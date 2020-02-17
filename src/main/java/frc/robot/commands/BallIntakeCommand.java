@@ -21,8 +21,8 @@ public class BallIntakeCommand extends CommandBase {
 
   @Override
   public void initialize() {
-    m_ballSubsystem.setBallCollectSpeed(Constants.BALL_SYSTEM_SPEED);
-    //m_ballSubsystem.setBallBeltSpeeds(Constants.BELT_SPEED);
+    m_ballSubsystem.setBallCollectSpeed(Constants.BALL_INTAKE_SPEED);
+    //m_ballSubsystem.setBallBeltSpeeds(Constants.BALL_BELT_SPEED);
   }
 
   @Override
