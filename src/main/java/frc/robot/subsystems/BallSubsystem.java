@@ -33,6 +33,14 @@ public class BallSubsystem extends SubsystemBase {
     ballBeltTwo.set(ControlMode.PercentOutput, speed);
   }
 
+  public void setFlywheelSpeed(double speed){
+    flyWheel.set(ControlMode.PercentOutput, speed);
+  }
+
+  public void setIndexSpeed(double speed){
+    index.set(ControlMode.PercentOutput, speed);
+  }
+
   @Override
   public void periodic() {
     

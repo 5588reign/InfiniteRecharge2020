@@ -8,8 +8,11 @@
 package frc.robot;
  
 public final class Constants {
-    public static double k = 0.3;
+    public static double k = 0.5;
     public static final double K_TURN = 0.25;
     public static final double MAX_SPEED = 0.25;
-    public static final double BALL_SYSTEM_SPEED = 0.75;
+    public static final double BALL_INTAKE_SPEED = 0.75;
+    public static final double BALL_BELT_SPEED = 0.5;
+    public static final double BALL_INDEX_SPEED = -0.75;
+    public static final double BALL_FLYWHEEL_SPEED = 1.00;
 }

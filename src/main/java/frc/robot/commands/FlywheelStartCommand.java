@@ -8,32 +8,36 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.DriveSubsystem;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANEncoder;
+import frc.robot.subsystems.BallSubsystem;
+import frc.robot.Constants;
 
-public class TurnLeftCommand extends CommandBase {
-  
-  private DriveSubsystem m_driveSubsystem;
 
-  public TurnLeftCommand(DriveSubsystem driveSubsystem) {
-    m_driveSubsystem = driveSubsystem;
+public class FlywheelStartCommand extends CommandBase {
+ 
+  private BallSubsystem m_ballSubsystem;
+
+  public FlywheelStartCommand (BallSubsystem ballSubsystem) {
+    m_ballSubsystem = ballSubsystem;
   }
 
   @Override
   public void initialize() {
+    m_ballSubsystem.setFlywheelSpeed(Constants.BALL_FLYWHEEL_SPEED);
   }
 
   @Override
   public void execute() {
+
   }
 
   @Override
   public void end(boolean interrupted) {
+    m_ballSubsystem.setFlywheelSpeed(0.0);
   }
 
   @Override
   public boolean isFinished() {
+
     return false;
   }
 }
