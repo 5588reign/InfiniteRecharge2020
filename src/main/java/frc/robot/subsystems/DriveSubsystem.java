@@ -44,6 +44,10 @@ public class DriveSubsystem extends SubsystemBase {
     backRightMotor.follow(frontRightMotor);
 
     // ???? Configure encoders here
+    m_frontLeftEncoder.setPositionConversionFactor(1.77);
+    m_frontRightEncoder.setPositionConversionFactor(1.77);
+    m_backLeftEncoder.setPositionConversionFactor(1.77);
+    m_backRightEncoder.setPositionConversionFactor(1.77);
 
     m_drive = new DifferentialDrive(frontLeftMotor, frontRightMotor);
   }
