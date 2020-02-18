@@ -14,5 +14,5 @@ public final class Constants {
     public static final double BALL_INTAKE_SPEED = 0.75;
     public static final double BALL_BELT_SPEED = 0.5;
     public static final double BALL_INDEX_SPEED = -0.75;
-    public static final double BALL_FLYWHEEL_SPEED = 1.00;
+    public static final double BALL_FLYWHEEL_SPEED = 0.80;
 }
