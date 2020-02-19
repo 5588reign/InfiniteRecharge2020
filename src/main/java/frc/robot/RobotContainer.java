@@ -37,7 +37,7 @@ public class RobotContainer {
 
   public static LimelightSubsystem m_limelight = new LimelightSubsystem();
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
-  private final BallSubsystem m_ballSubsystem = new BallSubsystem();
+  public static BallSubsystem m_ballSubsystem = new BallSubsystem();
   // ^ This is where we make our subsystems into instances!
 
   private static final int A_BUTTON_XBOX = 1;
@@ -83,10 +83,10 @@ public class RobotContainer {
     flywheelStarButton.toggleWhenPressed(new FlywheelStartCommand(m_ballSubsystem));
 
     JoystickButton oneIndexBallCommandButton = new JoystickButton(driverXBox, A_BUTTON_XBOX);
-    oneIndexBallCommandButton.toggleWhenPressed(new OneIndexBallCommand(m_ballSubsystem));
+    oneIndexBallCommandButton.whileHeld(new OneIndexBallCommand(m_ballSubsystem));
 
-    JoystickButton BeltOnlyTesterCommandButton = new JoystickButton(driverXBox, X_BUTTON_XBOX);
-    BeltOnlyTesterCommandButton.toggleWhenPressed(new BeltOnlyTesterCommand(m_ballSubsystem));
+    JoystickButton BeltOnlyTesterCommandButton = new JoystickButton(manipulatorXBox, X_BUTTON_XBOX);
+    BeltOnlyTesterCommandButton.whileHeld(new BeltOnlyTesterCommand(m_ballSubsystem));
     
   }
 

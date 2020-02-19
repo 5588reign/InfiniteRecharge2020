@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.BallSubsystem;
 import frc.robot.Constants;
@@ -17,12 +18,12 @@ public class FlywheelStartCommand extends CommandBase {
   private BallSubsystem m_ballSubsystem;
 
   public FlywheelStartCommand (BallSubsystem ballSubsystem) {
-    m_ballSubsystem = ballSubsystem;
+    m_ballSubsystem = ballSubsystem; 
   }
 
   @Override
   public void initialize() {
-    m_ballSubsystem.setFlywheelSpeed(Constants.BALL_FLYWHEEL_SPEED);
+    m_ballSubsystem.setFlywheelSpeed(Constants.FLYWHEEL_SPEED);
   }
 
   @Override
