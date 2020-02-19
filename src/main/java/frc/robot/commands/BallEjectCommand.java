@@ -20,7 +20,7 @@ public class BallEjectCommand extends CommandBase {
 
   @Override
   public void initialize() {
-    m_ballSubsystem.setBallCollectSpeed(-Constants.BALL_INTAKE_SPEED);
+    m_ballSubsystem.setBallCollectSpeed(-Constants.BALL_SYSTEM_SPEED);
   }
 
   @Override
