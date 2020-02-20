@@ -42,6 +42,11 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Limelight tx", RobotContainer.m_limelight.getX());
     SmartDashboard.putNumber("Limelight ty", RobotContainer.m_limelight.getY());
     SmartDashboard.putNumber("Limelight ta", RobotContainer.m_limelight.getArea());
+
+    SmartDashboard.putNumber("Flywheel Revolutions per min", (RobotContainer.m_ballSubsystem.flywheelEncoder.getRate()/2048)*60);
+    SmartDashboard.putNumber("Flywheel distance", RobotContainer.m_ballSubsystem.flywheelEncoder.getDistance());
+
+    
   }
 
   @Override

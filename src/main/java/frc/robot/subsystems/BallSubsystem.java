@@ -9,6 +9,10 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class BallSubsystem extends SubsystemBase {
@@ -20,8 +24,13 @@ public class BallSubsystem extends SubsystemBase {
   public VictorSPX index = new VictorSPX(8);
   public VictorSPX flyWheel = new VictorSPX(9);
 
-  public BallSubsystem() {
+  public DigitalInput flywheelA = new DigitalInput(0);
+  public DigitalInput flywheelB = new DigitalInput(1);
 
+  public Encoder flywheelEncoder = new Encoder(flywheelA, flywheelB);
+
+  public BallSubsystem() {
+    flywheelEncoder.reset();
   }
 
   public void setBallCollectSpeed(double speed){
@@ -31,6 +40,14 @@ public class BallSubsystem extends SubsystemBase {
   public void setBallBeltSpeeds(double speed){
     ballBeltOne.set(ControlMode.PercentOutput, speed);
     ballBeltTwo.set(ControlMode.PercentOutput, speed);
+  }
+
+  public void setFlywheelSpeed(double speed){
+    flyWheel.set(ControlMode.PercentOutput, speed);
+  }
+
+  public void setIndexSpeed(double speed){
+    index.set(ControlMode.PercentOutput, speed);
   }
 
   @Override

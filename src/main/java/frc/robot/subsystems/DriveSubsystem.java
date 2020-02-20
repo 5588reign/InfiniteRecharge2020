@@ -29,11 +29,16 @@ public class DriveSubsystem extends SubsystemBase {
   private CANEncoder m_backRightEncoder = new CANEncoder(backRightMotor);
 
   public DriveSubsystem() {
-    frontLeftMotor.setInverted(false);
-    frontRightMotor.setInverted(false);
-    backLeftMotor.setInverted(false);
-    backRightMotor.setInverted(false);
+    frontLeftMotor.setInverted(true);
+    frontRightMotor.setInverted(true);
+    backLeftMotor.setInverted(true);
+    backRightMotor.setInverted(true);
     // ^ FIX: Making sure none of the motors are inverted, change when we figure out WTH is up with the motors lol
+
+    frontLeftMotor.setSmartCurrentLimit(80);
+    frontRightMotor.setSmartCurrentLimit(80);
+    backLeftMotor.setSmartCurrentLimit(80);
+    backRightMotor.setSmartCurrentLimit(80);
 
     backLeftMotor.follow(frontLeftMotor);
     backRightMotor.follow(frontRightMotor);
