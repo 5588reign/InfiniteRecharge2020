@@ -12,7 +12,7 @@ public final class Constants {
     public static final double K_TURN = 0.25;
     public static final double MAX_SPEED = 0.25;
     public static final double BALL_SYSTEM_SPEED = 0.75;
-    public static final double BELT_SPEED = 0.30;
+    public static final double BELT_SPEED = 0.50;
     public static final double BALL_INDEX_SPEED = -0.75;
     public static final double FLYWHEEL_SPEED = 0.80 ;
 }
