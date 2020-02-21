@@ -1,5 +1,5 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
+/* Copyright (c) 2017-2019 FIRST. All Rights Reserved.                        */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
@@ -7,203 +7,95 @@
 
 package frc.robot;
 
-import edu.wpi.cscore.MjpegServer;
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.CAN;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.subsystems.Drive;
-import frc.robot.subsystems.Gyroscope;
-import frc.robot.subsystems.Limelight;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.Constants;
+import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.LimelightSubsystem;
+import frc.robot.RobotContainer;
+import frc.robot.Robot;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-
-
-/**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the TimedRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the build.gradle file in the
- * project.
- */
 public class Robot extends TimedRobot {
-  public static Drive drive = new Drive();
-  public static Gyroscope gyroscope = new Gyroscope();
-  public static Limelight limelight = new Limelight();
-  public static OI m_oi;
-  public static UsbCamera camera1;
-  public static UsbCamera camera2;
-  public static UsbCamera camera3;
-  public static MjpegServer cameraswitch;
-  public static Boolean switchingCameras = true;
 
-  private static final int IMG_WIDTH = 320;
-  private static final int IMG_HEIGHT = 240;
+  public RobotContainer m_robotContainer;
+  public DriveSubsystem m_robotDrive;
 
-  //private VisionThread visionThread;
-  public double centertapeOneX = 0.0;
-  public double centertapeTwoX = 0.0;
-  public static double turnAwayFromCenter = 0.0;
-
-  //private final Object imgLock = new Object();
-
-
-  Command m_autonomousCommand;
-  SendableChooser<Command> m_chooser = new SendableChooser<>();
-  
-
-  /**
-   * This function is run when the robot is first started up and should be
-   * used for any initialization code.
-   */
   @Override
   public void robotInit() {
-    m_oi = new OI();
-    m_chooser.setDefaultOption("Default Auto", new Command(){
-    
-      @Override
-      protected boolean isFinished() {
-        return false;
-      }
-    });
-    // chooser.addOption("My Auto", new MyAutoCommand());
-    SmartDashboard.putData("Auto mode", m_chooser);
-    
-    camera3 = CameraServer.getInstance().startAutomaticCapture("camera floor", 2);
-    camera3.setBrightness(1);
-    camera3.setResolution(IMG_WIDTH, IMG_HEIGHT);
-
-    /*visionThread = new VisionThread(camera3, new VisionGripPipeline(), pipeline -> { 
-      if (!pipeline.filterContoursOutput().isEmpty()) {
-        Rect tape1 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
-        Rect tape2 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(1));
-        synchronized (imgLock) {
-          centertapeOneX = tape1.x + (tape1.width / 2);
-          centertapeTwoX = tape2.x + (tape2.width / 2);
-        }
-      }
-    });
-    
-    visionThread.start();*/
-    
-    camera1 = CameraServer.getInstance().startAutomaticCapture("camera front", 0);
-    camera1.setBrightness(1);
-    camera2 = CameraServer.getInstance().startAutomaticCapture("camera back", 1);
-    camera2.setBrightness(1);
-    
-
-    cameraswitch = CameraServer.getInstance().addSwitchedCamera("camera Switch");
-    cameraswitch.setSource(camera2);
-  
+    m_robotContainer = new RobotContainer();
+    // ^ Where we make our RobotContainer/DriveSubsystem
   }
 
-  /**
-   * This function is called every robot packet, no matter the mode. Use
-   * this for items like diagnostics that you want ran during disabled,
-   * autonomous, teleoperated and test.
-   *
-   * <p>This runs after the mode specific periodic functions, but before
-   * LiveWindow and SmartDashboard integrated updating.
-   */
   @Override
   public void robotPeriodic() {
-    SmartDashboard.putNumber("Right Encoder Avg", (drive.frontRightEncoder.getPosition() + drive.backRightEncoder.getPosition())/2);
-    SmartDashboard.putNumber("Left Encoder Avg", (drive.frontLeftEncoder.getPosition() + drive.backLeftEncoder.getPosition())/2);
+    CommandScheduler.getInstance().run();
 
-    SmartDashboard.putNumber("LimelightX", limelight.getLimelightX());
-    SmartDashboard.putNumber("LimelightY", limelight.getLimelightY());
-    SmartDashboard.putNumber("LimelightArea", limelight.getLimelightArea());
+    SmartDashboard.putBoolean("limelight has target", RobotContainer.m_limelight.hasTarget());
+    SmartDashboard.putNumber("Limelight tx", RobotContainer.m_limelight.getX());
+    SmartDashboard.putNumber("Limelight ty", RobotContainer.m_limelight.getY());
+    SmartDashboard.putNumber("Limelight ta", RobotContainer.m_limelight.getArea());
   }
 
-  /**
-   * This function is called once each time the robot enters Disabled mode.
-   * You can use it to reset any subsystem information you want to clear when
-   * the robot is disabled.
-   */
   @Override
   public void disabledInit() {
-    drive.resetEncoders();
+
   }
 
   @Override
   public void disabledPeriodic() {
-    Scheduler.getInstance().run();
+
   }
 
-  /**
-   * This autonomous (along with the chooser code above) shows how to select
-   * between different autonomous modes using the dashboard. The sendable
-   * chooser code works with the Java SmartDashboard. If you prefer the
-   * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-   * getString code to get the auto name from the text box below the Gyro
-   *
-   * <p>You can add additional auto modes by adding additional commands to the
-   * chooser code above (like the commented example) or additional comparisons
-   * to the switch structure below with additional strings & commands.
-   */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_chooser.getSelected();
 
     /*
-     * String autoSelected = SmartDashboard.getString("Auto Selector",
-     * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-     * = new MyAutoCommand(); break; case "Default Auto": default:
-     * autonomousCommand = new ExampleCommand(); break; }
-     */
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
-    // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.start();
+     schedule the autonomous command (example)
+     if (m_autonomousCommand != null) {
+       m_autonomousCommand.schedule();
     }
+    */
+    // ^ This code could come in handy for Autonomous stuff!
   }
 
-  /**
-   * This function is called periodically during autonomous.
-   */
   @Override
   public void autonomousPeriodic() {
-    Scheduler.getInstance().run();
+
   }
 
   @Override
   public void teleopInit() {
-    // This makes sure that the autonomous stops running when
-    // teleop starts running. If you want the autonomous to
-    // continue until interrupted by another command, remove
-    // this line or comment it out.
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
-    }
+
+    /*
+     if (m_autonomousCommand != null) {
+       m_autonomousCommand.cancel();
+     }
+    */
+    // ^ SUPER IMPORTANT!!! You HAVE to cancel Autonomous commands here cuz teleop won't go unless you do!
   }
 
-  /**
-   * This function is called periodically during operator control.
-   */
   @Override
   public void teleopPeriodic() {
 
-    /*double centertapeOneX;
-    double centertapeTwoX;
-    synchronized (imgLock) {
-      
-      centertapeOneX = this.centertapeOneX;
-      centertapeTwoX = this.centertapeTwoX;
-    }
-    turnAwayFromCenter = (IMG_WIDTH / 2) - (centertapeOneX + centertapeTwoX)/2;
-    System.out.println("turn away from center :" + turnAwayFromCenter);
-    System.out.println("tape 1" + centertapeOneX);
-    System.out.println("tape 2" + centertapeTwoX);*/
+  }
 
+  @Override
+  public void testInit() {
+    CommandScheduler.getInstance().cancelAll();
+  }
 
-    Scheduler.getInstance().run();
-    }
-
-  /**
-   * This function is called periodically during test mode.
-   */
   @Override
   public void testPeriodic() {
   }
