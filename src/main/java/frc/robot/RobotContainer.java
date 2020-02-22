@@ -30,6 +30,7 @@ import frc.robot.commands.SequentialDriveExampleCommand;
 import frc.robot.subsystems.BallSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
+import frc.robot.Constants;
 
 public class RobotContainer {
   public static XboxController driverXBox = new XboxController(1);
@@ -56,7 +57,7 @@ public class RobotContainer {
     configureButtonBindings();
 
     m_robotDrive.setDefaultCommand(
-        new RunCommand(() -> m_robotDrive.tankDrive(driverXBox.getRawAxis(1), driverXBox.getRawAxis(5)), m_robotDrive));
+        new RunCommand(() -> m_robotDrive.tankDrive(-1.0 * driverXBox.getRawAxis(1), -1.0 * driverXBox.getRawAxis(5)), m_robotDrive));
     // ^ Setting the Default Command to m_robotDrive, meaning it will drive as long
     // as nothing else is scheduled
   }
@@ -69,10 +70,11 @@ public class RobotContainer {
     JoystickButton ballEjectCommandButton = new JoystickButton(driverXBox, RIGHT_BUMPER_XBOX);
     ballEjectCommandButton.toggleWhenPressed(new BallEjectCommand(m_ballSubsystem));
 
-    /*
-    JoystickButton driveDistanceCommandButton = new JoystickButton(driverXBox, X_BUTTON_XBOX);
-    driveDistanceCommandButton.whenPressed(new DriveDistanceCommand(60, 1, m_robotDrive));
+    
+    // JoystickButton driveDistanceCommandButton = new JoystickButton(manipulatorXBox, Y_BUTTON_XBOX);
+    // driveDistanceCommandButton.whenPressed(new DriveDistanceCommand(60, 1, m_robotDrive));
 
+    /*
     JoystickButton turnInplaceCommandButton = new JoystickButton(driverXBox, Y_BUTTON_XBOX);
     turnInplaceCommandButton.whenPressed(new TurnInplaceCommand(10, 1, m_robotDrive));
     
@@ -89,8 +91,14 @@ public class RobotContainer {
     JoystickButton oneIndexBallCommandButton = new JoystickButton(manipulatorXBox, A_BUTTON_XBOX);
     oneIndexBallCommandButton.whileHeld(new OneIndexBallCommand(m_ballSubsystem));
 
-    JoystickButton BeltOnlyTesterCommandButton = new JoystickButton(manipulatorXBox, X_BUTTON_XBOX);
-    BeltOnlyTesterCommandButton.whileHeld(new BeltOnlyTesterCommand(m_ballSubsystem));
+    JoystickButton BeltOnlyTesterCommandButton = new JoystickButton(manipulatorXBox, RIGHT_BUMPER_XBOX);
+    BeltOnlyTesterCommandButton.whileHeld(new BeltOnlyTesterCommand(m_ballSubsystem, true));
+
+    JoystickButton timedBackwardsBeltCommandButton = new JoystickButton(manipulatorXBox, Y_BUTTON_XBOX);
+    timedBackwardsBeltCommandButton.whenPressed(new BeltOnlyTesterCommand(m_ballSubsystem, false).withTimeout(Constants.BACKWARDS_BELT_TIME));
+
+    JoystickButton timedBeltOnlyTesterCommandButton = new JoystickButton(manipulatorXBox, X_BUTTON_XBOX);
+    timedBeltOnlyTesterCommandButton.whenPressed(new BeltOnlyTesterCommand(m_ballSubsystem, true).withTimeout(Constants.FORWARDS_BELT_TIME));
     
   }
 

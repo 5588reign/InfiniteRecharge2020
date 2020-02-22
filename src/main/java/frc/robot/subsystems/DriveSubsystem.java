@@ -29,9 +29,14 @@ public class DriveSubsystem extends SubsystemBase {
   private CANEncoder m_backRightEncoder = new CANEncoder(backRightMotor);
 
   public DriveSubsystem() {
-    frontLeftMotor.setInverted(true);
+    // frontLeftMotor.setInverted(true);
+    // frontRightMotor.setInverted(false);
+    // backLeftMotor.setInverted(true);
+    // backRightMotor.setInverted(false);
+
+    frontLeftMotor.setInverted(false);
     frontRightMotor.setInverted(true);
-    backLeftMotor.setInverted(true);
+    backLeftMotor.setInverted(false);
     backRightMotor.setInverted(true);
     // ^ FIX: Making sure none of the motors are inverted, change when we figure out WTH is up with the motors lol
 
@@ -46,6 +51,9 @@ public class DriveSubsystem extends SubsystemBase {
     // ???? Configure encoders here
 
     m_drive = new DifferentialDrive(frontLeftMotor, frontRightMotor);
+
+    m_drive.setRightSideInverted(false);
+    m_drive.setMaxOutput(.80);
   }
 
   public void arcadeDrive(double speed, double rotation) {

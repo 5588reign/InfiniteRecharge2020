@@ -13,7 +13,9 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotContainer;
 
 public class BallSubsystem extends SubsystemBase {
   public VictorSPX ballCollect = new VictorSPX(5);
@@ -27,7 +29,11 @@ public class BallSubsystem extends SubsystemBase {
   public DigitalInput flywheelA = new DigitalInput(0);
   public DigitalInput flywheelB = new DigitalInput(1);
 
+  public DigitalInput ballBeltA = new DigitalInput(2);
+  public DigitalInput ballBeltB = new DigitalInput(3);
+
   public Encoder flywheelEncoder = new Encoder(flywheelA, flywheelB);
+  public Encoder ballBeltEncoder = new Encoder(ballBeltA, ballBeltB);
 
   public BallSubsystem() {
     flywheelEncoder.reset();

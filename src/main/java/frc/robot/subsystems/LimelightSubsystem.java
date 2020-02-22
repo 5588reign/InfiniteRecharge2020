@@ -21,7 +21,7 @@ public class LimelightSubsystem extends SubsystemBase {
   // ^ Sets which pipeline the limelight is working off of
 
   public LimelightSubsystem(){
-    this(0);
+    this(1);
   }
   // ^ If no pipeline is entered, this constructor makes it pipeline zero
   // ^ FIX: Depending on how we set it up, we should change this

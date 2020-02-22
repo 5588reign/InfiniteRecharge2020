@@ -18,7 +18,7 @@ import frc.robot.subsystems.LimelightSubsystem;
 
 public class LimelightDistanceCommand extends CommandBase {
   
-  private static final double TARGET_AREA = 1.89;
+  private static final double TARGET_AREA = 1.30;
   private static final double MAX_AREA_ABS_ERROR = 0.005;
 
   private DriveSubsystem m_robotDrive;
@@ -50,7 +50,7 @@ public class LimelightDistanceCommand extends CommandBase {
           speed -= minValue;
         }
         
-        heading = -m_limelight.getX() * 0.04;
+        heading = m_limelight.getX() * 0.04;
         if (heading > 1){
           heading -= minValue;
           speed += 0.1;
@@ -59,7 +59,7 @@ public class LimelightDistanceCommand extends CommandBase {
           speed += 0.1;
         }
         speed = MathUtil.clamp(speed, -0.60, 0.60);
-        heading = MathUtil.clamp(heading, -1, 1);
+        heading = MathUtil.clamp(-heading, -1, 1);
         SmartDashboard.putNumber("Heading", heading);
         SmartDashboard.putNumber("Speed", speed);
     }
