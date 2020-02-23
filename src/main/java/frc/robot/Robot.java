@@ -45,6 +45,8 @@ public class Robot extends TimedRobot {
 
     SmartDashboard.putNumber("Flywheel Revolutions per min", (RobotContainer.m_ballSubsystem.flywheelEncoder.getRate()/2048)*60);
     SmartDashboard.putNumber("Flywheel distance", RobotContainer.m_ballSubsystem.flywheelEncoder.getDistance());
+
+    SmartDashboard.putBoolean("Intake got ball", RobotContainer.m_ballSubsystem.intakeHasBall());
   }
 
   @Override

@@ -24,6 +24,7 @@ import frc.robot.commands.LimelightAutoTrackCommand;
 import frc.robot.commands.OneIndexBallCommand;
 import frc.robot.commands.DriveDistanceCommand;
 import frc.robot.commands.FlywheelStartCommand;
+import frc.robot.commands.IRSensorCommand;
 import frc.robot.commands.TurnInplaceCommand;
 import frc.robot.commands.SequentialDriveExampleCommand;
 import frc.robot.subsystems.BallSubsystem;
@@ -87,6 +88,9 @@ public class RobotContainer {
 
     JoystickButton BeltOnlyTesterCommandButton = new JoystickButton(manipulatorXBox, X_BUTTON_XBOX);
     BeltOnlyTesterCommandButton.whileHeld(new BeltOnlyTesterCommand(m_ballSubsystem));
+
+    JoystickButton IRSystemButton = new JoystickButton(driverXBox, X_BUTTON_XBOX);
+    IRSystemButton.whileHeld(new IRSensorCommand(m_ballSubsystem));
     
   }
 

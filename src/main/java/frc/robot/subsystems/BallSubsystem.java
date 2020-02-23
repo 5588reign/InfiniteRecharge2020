@@ -29,6 +29,8 @@ public class BallSubsystem extends SubsystemBase {
 
   public Encoder flywheelEncoder = new Encoder(flywheelA, flywheelB);
 
+  public DigitalInput ballIntakeSensor = new DigitalInput(2);
+
   public BallSubsystem() {
     flywheelEncoder.reset();
   }
@@ -48,6 +50,11 @@ public class BallSubsystem extends SubsystemBase {
 
   public void setIndexSpeed(double speed){
     index.set(ControlMode.PercentOutput, speed);
+  }
+
+  public boolean intakeHasBall(){
+    return ballIntakeSensor.get();
+
   }
 
   @Override
