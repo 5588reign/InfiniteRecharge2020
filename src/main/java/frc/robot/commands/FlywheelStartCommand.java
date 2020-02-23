@@ -16,6 +16,7 @@ import frc.robot.Constants;
 public class FlywheelStartCommand extends CommandBase {
  
   private BallSubsystem m_ballSubsystem;
+  private boolean m_isStop;
 
   public FlywheelStartCommand (BallSubsystem ballSubsystem) {
     m_ballSubsystem = ballSubsystem; 
@@ -38,7 +39,6 @@ public class FlywheelStartCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-
     return false;
   }
 }

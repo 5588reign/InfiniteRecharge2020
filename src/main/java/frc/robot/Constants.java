@@ -17,4 +17,7 @@ public final class Constants {
     public static final double FLYWHEEL_SPEED = 0.80;
     public static final double BACKWARDS_BELT_TIME = 0.5;
     public static final double FORWARDS_BELT_TIME = 2.0;
+    public static final double INDEX_ONE_BALL_TIME = 0.5;
+    public static final double AUTO_INIT_FORWARD_DISTANCE = 12;
+    public static final double AUTO_INIT_FORWARD_SPEED = 0.2;
 }

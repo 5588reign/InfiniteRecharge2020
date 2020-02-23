@@ -63,7 +63,7 @@ public class LimelightDistanceCommand extends CommandBase {
         SmartDashboard.putNumber("Heading", heading);
         SmartDashboard.putNumber("Speed", speed);
     }
-    m_robotDrive.tankDrive(speed, heading);    
+    m_robotDrive.arcadeDrive(speed, heading);    
   }
 
   // Called once the command ends or is interrupted.

@@ -12,28 +12,32 @@ import frc.robot.subsystems.BallSubsystem;
 import frc.robot.Constants;
 
 public class BallIntakeCommand extends CommandBase {
-  
   private BallSubsystem m_ballSubsystem;
+  private boolean m_isIntake;
 
-  public BallIntakeCommand(BallSubsystem ballSubsystem) {
+  public BallIntakeCommand(BallSubsystem ballSubsystem, boolean isIntake) {
     m_ballSubsystem = ballSubsystem;
+    m_isIntake = isIntake;
   }
 
   @Override
   public void initialize() {
-    m_ballSubsystem.setBallCollectSpeed(Constants.BALL_SYSTEM_SPEED);
-    //m_ballSubsystem.setBallBeltSpeeds(Constants.BELT_SPEED);
+    if(m_isIntake){
+      m_ballSubsystem.setBallCollectSpeed(Constants.BALL_SYSTEM_SPEED);
+    }
+    else{
+      m_ballSubsystem.setBallCollectSpeed(-Constants.BALL_SYSTEM_SPEED);
+    }
+    
   }
 
   @Override
   public void execute() {
-
   }
 
   @Override
   public void end(boolean interrupted) {
     m_ballSubsystem.setBallCollectSpeed(0.0);
-    //m_ballSubsystem.setBallBeltSpeeds(0.0);
   }
 
   @Override
