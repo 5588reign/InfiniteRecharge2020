@@ -35,16 +35,12 @@ public class AutoBeltCommand extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
-
+    m_ballSubsystem.setBallBeltSpeeds(0);
   }
 
   @Override
   public boolean isFinished() {
-    if (m_ballSubsystem.intakeHasBall()) {
-        // if beam still blocked, keep running belt
-        return false;
-    }
-    m_ballSubsystem.setBallBeltSpeeds(0);
-    return true;
+    // if intake has ball, we are _not_ done
+    return !m_ballSubsystem.intakeHasBall();
   }
 }
