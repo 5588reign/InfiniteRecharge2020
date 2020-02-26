@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.BallSubsystem;
 
 public class AutoBeltCommand extends CommandBase {
   
@@ -15,6 +16,7 @@ public class AutoBeltCommand extends CommandBase {
 
   public AutoBeltCommand(BallSubsystem ballSubsystem) {
     m_ballSubsystem = ballSubsystem;
+    addRequirements(m_ballSubsystem);
   }
 
   @Override
