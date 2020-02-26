@@ -26,7 +26,11 @@ public class AutoBeltCommand extends CommandBase {
 
   @Override
   public void execute() {
-
+    if (m_ballSubsystem.intakeHasBall()){
+      m_ballSubsystem.setBallBeltSpeeds(.25);
+    } else {
+      m_ballSubsystem.setBallBeltSpeeds(0);
+    }
   }
 
   @Override
@@ -36,6 +40,9 @@ public class AutoBeltCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
+    if(!m_ballSubsystem.intakeHasBall()){
+      m_ballSubsystem.setBallBeltSpeeds(0);
+    }
     return false;
   }
 }
