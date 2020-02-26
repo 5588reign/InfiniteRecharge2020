@@ -1,31 +1,33 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
 
 public class TurnInplaceCommand extends CommandBase {
+    private static final double POSITION_PER_REV = 7.0 / 30.0; // depends on PCF
     private final DriveSubsystem m_driveSubsystem;
     private final double m_rotation;
     private final double m_speed;
+    private double origin;
+    private double target;
 
-    // rotation should be in degrees
+    // rotation should be signed degrees, positve counter clockwise, speed should be positive
     public TurnInplaceCommand(double rotation, double speed, DriveSubsystem drive) {
-	    m_rotation = Math.abs(rotation); // must be _magnitude_ in degrees
-	    m_speed = speed;
-	    m_driveSubsystem = drive;
+      m_rotation = rotation * POSITION_PER_REV;
+      m_speed = Math.abs(speed);
+      m_driveSubsystem = drive;
+      addRequirements(m_driveSubsystem);
     }
 
     @Override
     public void initialize() {
-      m_driveSubsystem.resetEncoders();
-      m_driveSubsystem.tankDrive(-m_speed, m_speed);
+	origin = m_driveSubsystem.getLeftEncoderDistance();
+	target = Math.signum(m_rotation) * m_speed + origin;
+    }
+
+    @Override
+    public void execute() {
+      m_driveSubsystem.tankDrive(m_speed, -m_speed);
     }
 
     @Override
@@ -35,6 +37,11 @@ public class TurnInplaceCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-      return Math.abs(m_driveSubsystem.getLeftEncoderDistance()) >= m_rotation;
+      double current = m_driveSubsystem.getLeftEncoderDistance();
+      if (m_rotation > 0) {
+	      return current >= target;
+      } else {
+	      return current <= target;
+      }
     }
 }

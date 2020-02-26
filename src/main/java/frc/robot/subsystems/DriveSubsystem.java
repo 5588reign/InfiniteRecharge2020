@@ -11,6 +11,7 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -29,9 +30,9 @@ public class DriveSubsystem extends SubsystemBase {
   private CANEncoder m_backRightEncoder = new CANEncoder(backRightMotor);
 
   public DriveSubsystem() {
-    frontLeftMotor.setInverted(true);
+    frontLeftMotor.setInverted(false);
     frontRightMotor.setInverted(true);
-    backLeftMotor.setInverted(true);
+    backLeftMotor.setInverted(false);
     backRightMotor.setInverted(true);
     // ^ FIX: Making sure none of the motors are inverted, change when we figure out WTH is up with the motors lol
 
@@ -49,16 +50,21 @@ public class DriveSubsystem extends SubsystemBase {
     m_backLeftEncoder.setPositionConversionFactor(1.77);
     m_backRightEncoder.setPositionConversionFactor(1.77);
 
+    this.resetEncoders();
+    
     m_drive = new DifferentialDrive(frontLeftMotor, frontRightMotor);
+
+    m_drive.setRightSideInverted(false);
+    m_drive.setMaxOutput(Constants.k);
   }
 
   public void arcadeDrive(double speed, double rotation) {
-    m_drive.arcadeDrive(speed * Constants.k, rotation);
+    m_drive.arcadeDrive(speed, rotation);
   }
     
   public void tankDrive(double leftSpeed, double rightSpeed){
     // May need invert left
-    m_drive.tankDrive(leftSpeed * Constants.k, rightSpeed * Constants.k);
+    m_drive.tankDrive(leftSpeed, rightSpeed);
   }
 
   @Override

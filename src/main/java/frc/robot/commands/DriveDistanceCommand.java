@@ -14,18 +14,25 @@ public class DriveDistanceCommand extends CommandBase {
     private final DriveSubsystem m_driveSubsystem;
     private final double m_distance;
     private final double m_speed;
+    private double origin;
+    private double target;
 
-    // Distance & encoder scaling must be in meters
-    // Speed can be negative but distance must be magnitude
+    // Speed can be negative but distance must be magnitude in inches
     public DriveDistanceCommand(double distance, double speed, DriveSubsystem drive) {
-    	m_distance = Math.abs(distance); // must be _magnitude_ in meters
-	    m_speed = speed;
-	    m_driveSubsystem = drive;
+      m_distance = Math.abs(distance);
+      m_speed = speed;
+      m_driveSubsystem = drive;
+      addRequirements(m_driveSubsystem);
     }
 
     @Override
     public void initialize() {
-      m_driveSubsystem.resetEncoders();
+      origin = m_driveSubsystem.getLeftEncoderDistance();
+      target = Math.signum(m_speed) * m_distance + origin;
+    }
+
+    @Override
+    public void execute() {
       m_driveSubsystem.tankDrive(m_speed, m_speed);
     }
 
@@ -36,6 +43,11 @@ public class DriveDistanceCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-      return Math.abs(m_driveSubsystem.getLeftEncoderDistance()) >= m_distance;
+      double current = m_driveSubsystem.getLeftEncoderDistance();
+      if (m_speed > 0) {
+	  return current >= target;
+      } else {
+	  return current <= target;
+      }
     }
 }
