@@ -52,7 +52,7 @@ public class BallSubsystem extends SubsystemBase {
   }
 
   public boolean intakeHasBall(){
-    return ballIntakeSensor.get();
+    return !ballIntakeSensor.get();
 
   }
 
