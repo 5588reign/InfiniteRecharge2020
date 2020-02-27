@@ -10,20 +10,24 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.DriveDistanceCommand;
 import frc.robot.commands.TurnInplaceCommand;
+import frc.robot.commands.LimelightDistanceCommand;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.LimelightSubsystem;
 
 /**
  * A complex auto command that drives forward, releases a hatch, and then drives backward.
  */
 public class SequentialDriveExampleCommand extends SequentialCommandGroup {
-  private static final double FORWARD_DISTANCE = 12;
-  private static final double FORWARD_SPEED = 0.2;
-  private static final double TURN_DISTANCE = 12;
-  public SequentialDriveExampleCommand(DriveSubsystem drive) {
+  private static final double FORWARD_DISTANCE = 5;
+  private static final double FORWARD_SPEED = 0.25;
+  private static final double TURN_DISTANCE = 24;
+  public SequentialDriveExampleCommand(DriveSubsystem drive, LimelightSubsystem limelight) {
       // Drive forward some distance and turn in place
       addCommands(
-		  new DriveDistanceCommand(FORWARD_DISTANCE, FORWARD_SPEED,  drive),
-		  new TurnInplaceCommand(TURN_DISTANCE, FORWARD_SPEED,  drive)
+      new DriveDistanceCommand(FORWARD_DISTANCE, FORWARD_SPEED,  drive),
+      new DriveDistanceCommand(FORWARD_DISTANCE, -FORWARD_SPEED,  drive),
+      new LimelightDistanceCommand(limelight, drive)
+      //new TurnInplaceCommand(TURN_DISTANCE, FORWARD_SPEED,  drive)
 		  );
     }
 

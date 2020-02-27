@@ -33,6 +33,7 @@ public class TurnInplaceCommand extends CommandBase {
     @Override
     public void end(boolean interrupted) {
       m_driveSubsystem.tankDrive(0.0, 0.0);
+      System.out.println(interrupted);
     }
 
     @Override

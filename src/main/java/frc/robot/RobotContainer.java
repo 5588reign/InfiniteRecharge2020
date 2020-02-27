@@ -21,9 +21,10 @@ import frc.robot.commands.BallEjectCommand;
 import frc.robot.commands.BallIntakeCommand;
 import frc.robot.commands.BeltOnlyTesterCommand;
 import frc.robot.commands.LimelightAutoTrackCommand;
-import frc.robot.commands.OneIndexBallCommand;
+import frc.robot.commands.LimelightDistanceCommand;
+//import frc.robot.commands.OneIndexBallCommand;
 import frc.robot.commands.DriveDistanceCommand;
-import frc.robot.commands.FlywheelStartCommand;
+//import frc.robot.commands.FlywheelStartCommand;
 import frc.robot.commands.IRSensorCommand;
 import frc.robot.commands.TurnInplaceCommand;
 import frc.robot.commands.SequentialDriveExampleCommand;
@@ -37,9 +38,11 @@ public class RobotContainer {
   // ^ FIX: Check to make sure manipulatorXBox is on the right port
 
   public static LimelightSubsystem m_limelight = new LimelightSubsystem();
-  private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  public final static DriveSubsystem m_robotDrive = new DriveSubsystem();
   public static BallSubsystem m_ballSubsystem = new BallSubsystem();
   // ^ This is where we make our subsystems into instances!
+
+  public static SequentialDriveExampleCommand m_DriveExampleCommand = new SequentialDriveExampleCommand(m_robotDrive, m_limelight);
 
   private static final int A_BUTTON_XBOX = 1;
   private static final int B_BUTTON_XBOX = 2;
@@ -56,7 +59,7 @@ public class RobotContainer {
     configureButtonBindings();
 
     m_robotDrive.setDefaultCommand(
-        new RunCommand(() -> m_robotDrive.tankDrive(driverXBox.getRawAxis(1), driverXBox.getRawAxis(5)), m_robotDrive));
+        new RunCommand(() -> m_robotDrive.tankDrive(-driverXBox.getRawAxis(1), -driverXBox.getRawAxis(5)), m_robotDrive));
     // ^ Setting the Default Command to m_robotDrive, meaning it will drive as long
     // as nothing else is scheduled
   }
@@ -69,26 +72,30 @@ public class RobotContainer {
     JoystickButton ballEjectCommandButton = new JoystickButton(driverXBox, RIGHT_BUMPER_XBOX);
     ballEjectCommandButton.toggleWhenPressed(new BallEjectCommand(m_ballSubsystem));
 
-    /*
+    JoystickButton autoTrackButton = new JoystickButton(manipulatorXBox, B_BUTTON_XBOX);
+    autoTrackButton.whileHeld(new LimelightDistanceCommand(m_limelight, m_robotDrive));
+
+/*
     JoystickButton driveDistanceCommandButton = new JoystickButton(driverXBox, X_BUTTON_XBOX);
     driveDistanceCommandButton.whenPressed(new DriveDistanceCommand(60, 1, m_robotDrive));
-
+*/
     JoystickButton turnInplaceCommandButton = new JoystickButton(driverXBox, Y_BUTTON_XBOX);
     turnInplaceCommandButton.whenPressed(new TurnInplaceCommand(10, 1, m_robotDrive));
     
     JoystickButton sequentialDriveCommandButton = new JoystickButton(driverXBox, B_BUTTON_XBOX);
-    sequentialDriveCommandButton.whenPressed(new SequentialDriveExampleCommand(m_robotDrive));
-    */
+    sequentialDriveCommandButton.whenPressed(new SequentialDriveExampleCommand(m_robotDrive, m_limelight));
+  /*
 
     JoystickButton flywheelStarButton = new JoystickButton(driverXBox, B_BUTTON_XBOX);
     flywheelStarButton.toggleWhenPressed(new FlywheelStartCommand(m_ballSubsystem));
 
     JoystickButton oneIndexBallCommandButton = new JoystickButton(driverXBox, A_BUTTON_XBOX);
     oneIndexBallCommandButton.whileHeld(new OneIndexBallCommand(m_ballSubsystem));
-
+*/
     JoystickButton BeltOnlyTesterCommandButton = new JoystickButton(manipulatorXBox, X_BUTTON_XBOX);
     BeltOnlyTesterCommandButton.whileHeld(new BeltOnlyTesterCommand(m_ballSubsystem));
 
+    
     JoystickButton IRSystemButton = new JoystickButton(driverXBox, X_BUTTON_XBOX);
     IRSystemButton.whileHeld(new IRSensorCommand(m_ballSubsystem));
     
